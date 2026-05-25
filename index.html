@@ -4,281 +4,614 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Історія пауерліфтингу — Шкільний проект</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
-        /* Загальні стилі для всього сайту */
         * {
             box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            scroll-behavior: smooth; /* Плавна прокрутка по меню */
+            scroll-behavior: smooth;
         }
 
         body {
-            background-color: #1a1a1a; /* Темний фон */
+            margin: 0;
+            background: #111111;
             color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
         }
 
-        /* Навігаційне меню */
+        body.menu-open {
+            overflow: hidden;
+        }
+
         header {
-            background-color: #111111;
             position: fixed;
-            width: 100%;
             top: 0;
+            left: 0;
+            width: 100%;
             z-index: 1000;
-            border-bottom: 3px solid #ff4500; /* Помаранчевий акцент */
+            background: rgba(17, 17, 17, 0.86);
+            border-bottom: 3px solid #ff4500;
+            backdrop-filter: blur(12px);
         }
 
         nav {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            max-width: 1200px;
+            justify-content: space-between;
+            max-width: 1180px;
             margin: 0 auto;
-            padding: 15px 20px;
+            padding: 14px 20px;
         }
 
         .logo {
-            font-size: 24px;
-            font-weight: bold;
-            text-transform: uppercase;
             color: #ff4500;
+            font-size: clamp(20px, 5vw, 28px);
+            font-weight: 900;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
         }
 
-        nav ul {
+        .nav-links {
             display: flex;
+            gap: 22px;
+            align-items: center;
             list-style: none;
+            margin: 0;
+            padding: 0;
         }
 
-        nav ul li {
-            margin-left: 20px;
-        }
-
-        nav ul li a {
+        .nav-links a {
             color: #ffffff;
-            text-decoration: none;
             font-size: 16px;
-            font-weight: 600;
-            transition: color 0.3s;
+            font-weight: 700;
+            text-decoration: none;
+            transition: color 0.25s ease;
         }
 
-        nav ul li a:hover {
+        .nav-links a:hover,
+        .nav-links a:focus-visible {
             color: #ff4500;
         }
 
-        /* Стилі для секцій (блоків сторінки) */
-        section {
-            padding: 100px 20px 60px 20px; /* Відступ зверху через фіксоване меню */
-            max-width: 1000px;
-            margin: 0 auto;
+        .menu-toggle {
+            display: none;
+            width: 44px;
+            height: 44px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+            cursor: pointer;
         }
 
-        h2 {
-            font-size: 32px;
-            text-transform: uppercase;
-            margin-bottom: 25px;
-            color: #ff4500;
-            border-left: 5px solid #ff4500;
-            padding-left: 15px;
+        .menu-toggle span {
+            display: block;
+            width: 20px;
+            height: 2px;
+            margin: 5px auto;
+            background: #ffffff;
+            transition: transform 0.25s ease, opacity 0.25s ease;
         }
 
-        p {
-            font-size: 18px;
-            margin-bottom: 15px;
-            color: #dddddd;
+        .menu-open .menu-toggle span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
         }
 
-        /* Головний блок (Вступ) */
-        #home {
+        .menu-open .menu-toggle span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-open .menu-toggle span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        .hero {
+            min-height: 100svh;
+            display: grid;
+            place-items: center;
+            position: relative;
+            overflow: hidden;
+            padding: 120px 20px 78px;
             text-align: center;
-            padding: 180px 20px 100px 20px;
-            background: linear-gradient(rgba(26,26,26,0.8), rgba(26,26,26,1));
+            isolation: isolate;
         }
 
-        #home h1 {
-            font-size: 48px;
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: -2;
+            background: url("https://images.pexels.com/photos/5929232/pexels-photo-5929232.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=1800") center/cover no-repeat;
+            transform: scale(1.04);
+            animation: slowZoom 13s ease-out forwards;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.58), rgba(17, 17, 17, 0.82) 64%, #111111 100%);
+        }
+
+        .hero-content {
+            max-width: 920px;
+            animation: riseIn 0.9s ease both;
+        }
+
+        .brand-mark {
+            display: block;
+            color: #ff4500;
+            font-size: clamp(36px, 11vw, 86px);
+            font-weight: 950;
+            letter-spacing: 0.08em;
+            line-height: 0.95;
             text-transform: uppercase;
-            margin-bottom: 20px;
-            letter-spacing: 2px;
+            text-shadow: 0 10px 34px rgba(0, 0, 0, 0.65);
+        }
+
+        .hero h1 {
+            margin: 18px 0 16px;
+            font-size: clamp(28px, 8vw, 66px);
+            line-height: 1;
+            font-weight: 950;
+            text-transform: uppercase;
         }
 
         .subtitle {
-            font-size: 20px;
-            color: #aaaaaa;
-            max-width: 700px;
-            margin: 0 auto;
+            max-width: 720px;
+            margin: 0 auto 28px;
+            color: #ededed;
+            font-size: clamp(17px, 4vw, 22px);
         }
 
-        /* Хронологічний список на сторінці історії */
+        .cta-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 48px;
+            padding: 12px 20px;
+            border: 2px solid #ff4500;
+            border-radius: 999px;
+            color: #ffffff;
+            font-weight: 800;
+            text-decoration: none;
+            transition: transform 0.25s ease, background 0.25s ease;
+        }
+
+        .cta.primary {
+            background: #ff4500;
+        }
+
+        .cta:hover,
+        .cta:focus-visible {
+            transform: translateY(-3px);
+            background: #ff4500;
+        }
+
+        section {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 92px 20px 64px;
+        }
+
+        h2 {
+            margin: 0 0 22px;
+            padding-left: 14px;
+            border-left: 5px solid #ff4500;
+            color: #ff4500;
+            font-size: clamp(28px, 7vw, 42px);
+            line-height: 1.08;
+            text-transform: uppercase;
+        }
+
+        p {
+            margin: 0 0 15px;
+            color: #dddddd;
+            font-size: clamp(16px, 4vw, 18px);
+        }
+
+        .media-strip {
+            width: 100%;
+            max-width: none;
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .wide-photo {
+            width: 100%;
+            min-height: min(68vw, 560px);
+            object-fit: cover;
+            display: block;
+        }
+
+        .image-caption {
+            max-width: 1080px;
+            margin: 12px auto 0;
+            padding: 0 20px;
+            color: #999999;
+            font-size: 14px;
+        }
+
         .timeline {
-            margin-top: 20px;
+            margin-top: 28px;
+            border-left: 3px solid rgba(255, 69, 0, 0.42);
         }
 
         .timeline-item {
-            margin-bottom: 25px;
-            background-color: #262626;
-            padding: 20px;
-            border-radius: 5px;
-            border-right: 4px solid #333;
+            position: relative;
+            padding: 0 0 28px 24px;
+        }
+
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            top: 7px;
+            left: -9px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: #ff4500;
+            box-shadow: 0 0 0 7px rgba(255, 69, 0, 0.14);
         }
 
         .timeline-year {
-            font-weight: bold;
             color: #ff4500;
-            font-size: 20px;
-            margin-bottom: 5px;
+            font-size: 21px;
+            font-weight: 900;
+            margin-bottom: 6px;
         }
 
-        /* Таблиця для вправ */
+        .table-wrap {
+            margin-top: 24px;
+            overflow-x: auto;
+            border: 1px solid #333333;
+        }
+
         table {
             width: 100%;
+            min-width: 620px;
             border-collapse: collapse;
-            margin-top: 20px;
-            background-color: #222222;
+            background: #1c1c1c;
         }
 
-        th, td {
-            padding: 15px;
+        th,
+        td {
+            padding: 16px;
             text-align: left;
-            border-bottom: 1px solid #444444;
+            border-bottom: 1px solid #3b3b3b;
+            vertical-align: top;
         }
 
         th {
-            background-color: #ff4500;
+            background: #ff4500;
             color: #ffffff;
+            font-size: 15px;
             text-transform: uppercase;
-            font-size: 16px;
         }
 
         tr:hover {
-            background-color: #2a2a2a;
+            background: #242424;
         }
 
-        /* Список українських атлетів */
+        .video-section {
+            width: 100%;
+            max-width: none;
+            padding: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .training-video {
+            width: 100%;
+            height: min(72vw, 620px);
+            min-height: 280px;
+            display: block;
+            object-fit: cover;
+        }
+
+        .video-copy {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 22px 20px 70px;
+        }
+
         .ukraine-list {
+            display: grid;
+            gap: 18px;
+            margin: 22px 0 0;
+            padding: 0;
             list-style: none;
-            margin-top: 15px;
         }
 
         .ukraine-list li {
-            background-color: #262626;
-            padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            border-left: 4px solid #ffd700; /* Жовтий акцент для України */
+            padding-left: 18px;
+            border-left: 4px solid #ffd700;
         }
 
         .athlete-name {
-            font-weight: bold;
+            margin-bottom: 6px;
             color: #ffffff;
-            font-size: 18px;
+            font-size: 20px;
+            font-weight: 900;
         }
 
-        /* Підвал сайту */
         footer {
-            background-color: #111111;
+            margin-top: 30px;
+            padding: 24px 20px;
+            border-top: 1px solid #272727;
+            background: #0d0d0d;
             text-align: center;
-            padding: 20px;
-            margin-top: 40px;
+        }
+
+        footer p {
+            margin: 0;
+            color: #777777;
             font-size: 14px;
-            color: #666666;
-            border-top: 1px solid #222222;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes riseIn {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slowZoom {
+            from {
+                transform: scale(1.08);
+            }
+            to {
+                transform: scale(1.01);
+            }
+        }
+
+        @media (max-width: 760px) {
+            nav {
+                padding: 12px 16px;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 71px;
+                left: 0;
+                width: 100%;
+                height: calc(100svh - 71px);
+                display: grid;
+                place-content: center;
+                gap: 22px;
+                background: rgba(17, 17, 17, 0.97);
+                transform: translateX(100%);
+                transition: transform 0.3s ease;
+            }
+
+            .menu-open .nav-links {
+                transform: translateX(0);
+            }
+
+            .nav-links a {
+                font-size: 24px;
+            }
+
+            .hero {
+                min-height: 92svh;
+                padding-top: 110px;
+            }
+
+            .cta-row {
+                align-items: stretch;
+                flex-direction: column;
+            }
+
+            .cta {
+                width: min(100%, 360px);
+                margin: 0 auto;
+            }
+
+            section {
+                padding-top: 72px;
+                padding-bottom: 46px;
+            }
+
+            .timeline {
+                margin-left: 6px;
+            }
+
+            th,
+            td {
+                padding: 14px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                scroll-behavior: auto !important;
+                transition-duration: 0.01ms !important;
+            }
         }
     </style>
 </head>
 <body>
-
     <header>
-        <nav>
-            <div class="logo">PowerHistory</div>
-            <ul>
+        <nav aria-label="Головне меню">
+            <a class="logo" href="#home">PowerHistory</a>
+            <button class="menu-toggle" type="button" aria-label="Відкрити меню" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links">
                 <li><a href="#home">Головна</a></li>
                 <li><a href="#history">Історія</a></li>
                 <li><a href="#exercises">Вправи</a></li>
+                <li><a href="#video">Відео</a></li>
                 <li><a href="#ukraine">В Україні</a></li>
             </ul>
         </nav>
     </header>
 
-    <section id="home">
-        <h1>Залізний спорт</h1>
-        <p class="subtitle">Проект про історію, правила та розвиток пауерліфтингу — спорту для тих, хто керує абсолютною силою.</p>
-    </section>
-
-    <section id="about">
-        <h2>Що таке пауерліфтинг?</h2>
-        <p><strong>Пауерліфтинг</strong> (від англійського <em>power</em> — сила, та <em>lift</em> — піднімати) — це силове триборство. Головна мета атлета — підняти сумарно якомога більшу вагу у трьох базових вправах.</p>
-        <p>На відміну від важкої атлетики (де штангу піднімають над головою ривком чи поштовхом), у пауерліфтингу оцінюється чиста сила м'язів у рухах, які є максимально природними для людського тіла.</p>
-    </section>
-
-    <section id="history">
-        <h2>Історія виникнення</h2>
-        <p>Сучасний пауерліфтинг пройшов довгий шлях від простих розваг силачів у цирку до офіційного міжнародного виду спорту.</p>
-        
-        <div class="timeline">
-            <div class="timeline-item">
-                <div class="timeline-year">1950-ті роки</div>
-                <p>У США та Великій Британії важкоатлети почали використовувати нові вправи для урізноманітнення тренувань. Тоді з'явилися так звані «дивні підйоми» (odd lifts), серед яких найпопулярнішими стали присідання, жим на лаві та тяга.</p>
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <span class="brand-mark">PowerHistory</span>
+                <h1>Залізний спорт</h1>
+                <p class="subtitle">Проект про історію, правила та розвиток пауерліфтингу — спорту для тих, хто керує абсолютною силою.</p>
+                <div class="cta-row" aria-label="Швидкі переходи">
+                    <a class="cta primary" href="#about">Почати читати</a>
+                    <a class="cta" href="#video">Переглянути відео</a>
+                </div>
             </div>
-            <div class="timeline-item">
-                <div class="timeline-year">1964 рік</div>
-                <p>У США організували перший неофіційний загальнонаціональний чемпіонат. Саме тоді остаточно сформувалося класичне триборство.</p>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-year">1972 рік</div>
-                <p>Було засновано <strong>IPF (International Powerlifting Federation)</strong> — Міжнародну федерацію пауерліфтингу. Вона розробила єдині правила змагань та почала проводити офіційні чемпіонати світу.</p>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="exercises">
-        <h2>Силове триборство</h2>
-        <p>Змагання проходять суворо за чергою у трьох дисциплінах. На кожну вправу спортсмен має по 3 спроби:</p>
-        
-        <table>
-            <thead>
-                <tr>
-                    <th>Вправа</th>
-                    <th>Опис виконання та суть руху</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>Присідання зі штангою</strong></td>
-                    <td>Штанга лежить на плечах атлета. Він повинен присісти так, щоб верхня частина стегна в тазостегновому суглобі була нижчою за верхню точку коліна, а потім самостійно піднятися.</td>
-                </tr>
-                <tr>
-                    <td><strong>Жим лежачи</strong></td>
-                    <td>Атлет лягає на горизонтальну лаву, знімає штангу зі стійок, опускає її до торкання грудей, робить чітку паузу за командою судді та витискає вгору на повністю прямі руки.</td>
-                </tr>
-                <tr>
-                    <td><strong>Станова тяга</strong></td>
-                    <td>Фінальна вправа. Штанга стоїть на підлозі. Атлет має відірвати її від помосту і повністю випрямитися, зафіксувавши плечі. Кінцевий результат триборства — це сума найкращих спроб у кожній вправі.</td>
-                </tr>
-            </tbody>
-        </table>
-    </section>
+        <section id="about" class="reveal">
+            <h2>Що таке пауерліфтинг?</h2>
+            <p><strong>Пауерліфтинг</strong> (від англійського <em>power</em> — сила, та <em>lift</em> — піднімати) — це силове триборство. Головна мета атлета — підняти сумарно якомога більшу вагу у трьох базових вправах.</p>
+            <p>На відміну від важкої атлетики, де штангу піднімають над головою ривком чи поштовхом, у пауерліфтингу оцінюється чиста сила м'язів у рухах, які є максимально природними для людського тіла.</p>
+        </section>
 
-    <section id="ukraine">
-        <h2>Пауерліфтинг в Україні</h2>
-        <p>Українська збірна є однією з найсильніших команд на світовій арені. Наші ліфтери регулярно б'ють світові рекорди та завойовують золото на міжнародних турнірах.</p>
-        
-        <ul class="ukraine-list">
-            <li>
-                <div class="athlete-name">Лариса Соловйова</div>
-                <p>Легенда світового спорту. Чотириразова чемпіонка Всесвітніх ігор. Багато разів визнавалася найсильнішою жінкою планети за формулою IPF (співвідношення власної ваги до піднятої).</p>
-            </li>
-            <li>
-                <div class="athlete-name">Олексій Новіков</div>
-                <p>Хоча зараз Олексій відомий як "Найсильніша людина світу" (World's Strongest Man 2020) у стронгмені, свою базову підготовку та перші рекорди він закладав саме у класичному пауерліфтингу.</p>
-            </li>
-        </ul>
-    </section>
+        <section class="media-strip reveal" aria-label="Фото тренування з пауерліфтингу">
+            <img class="wide-photo" src="https://images.pexels.com/photos/19029103/pexels-photo-19029103.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1600" alt="Атлет тренується зі штангою у спортивній залі" loading="lazy">
+            <p class="image-caption">Фото: тренування зі штангою допомагає підготувати тіло до трьох головних рухів пауерліфтингу.</p>
+        </section>
+
+        <section id="history" class="reveal">
+            <h2>Історія виникнення</h2>
+            <p>Сучасний пауерліфтинг пройшов довгий шлях від простих розваг силачів у цирку до офіційного міжнародного виду спорту.</p>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-year">1950-ті роки</div>
+                    <p>У США та Великій Британії важкоатлети почали використовувати нові вправи для урізноманітнення тренувань. Тоді з'явилися так звані «дивні підйоми» (odd lifts), серед яких найпопулярнішими стали присідання, жим на лаві та тяга.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">1964 рік</div>
+                    <p>У США організували перший неофіційний загальнонаціональний чемпіонат. Саме тоді остаточно сформувалося класичне триборство.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">1972 рік</div>
+                    <p>Було засновано <strong>IPF (International Powerlifting Federation)</strong> — Міжнародну федерацію пауерліфтингу. Вона розробила єдині правила змагань та почала проводити офіційні чемпіонати світу.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="exercises" class="reveal">
+            <h2>Силове триборство</h2>
+            <p>Змагання проходять суворо за чергою у трьох дисциплінах. На кожну вправу спортсмен має по 3 спроби:</p>
+            <div class="table-wrap" role="region" aria-label="Таблиця вправ" tabindex="0">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Вправа</th>
+                            <th>Опис виконання та суть руху</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Присідання зі штангою</strong></td>
+                            <td>Штанга лежить на плечах атлета. Він повинен присісти так, щоб верхня частина стегна в тазостегновому суглобі була нижчою за верхню точку коліна, а потім самостійно піднятися.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Жим лежачи</strong></td>
+                            <td>Атлет лягає на горизонтальну лаву, знімає штангу зі стійок, опускає її до торкання грудей, робить чітку паузу за командою судді та витискає вгору на повністю прямі руки.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Станова тяга</strong></td>
+                            <td>Фінальна вправа. Штанга стоїть на підлозі. Атлет має відірвати її від помосту і повністю випрямитися, зафіксувавши плечі. Кінцевий результат триборства — це сума найкращих спроб у кожній вправі.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="video" class="video-section reveal" aria-label="Відео з тренування">
+            <video class="training-video" controls muted loop playsinline preload="metadata" poster="https://images.pexels.com/videos/14180867/back-workout-deadlift-exercise-fitness-and-health-14180867.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=720&w=1280">
+                <source src="https://videos.pexels.com/video-files/14180867/14180867-uhd_4096_2048_24fps.mp4" type="video/mp4">
+                Ваш браузер не підтримує відео.
+            </video>
+            <div class="video-copy">
+                <h2>Відео тренування</h2>
+                <p>У відео видно один із ключових рухів силової підготовки — станову тягу. На телефоні ролик масштабується на всю ширину екрана, а керування залишається зручним для натискання пальцем.</p>
+            </div>
+        </section>
+
+        <section id="ukraine" class="reveal">
+            <h2>Пауерліфтинг в Україні</h2>
+            <p>Українська збірна є однією з найсильніших команд на світовій арені. Наші ліфтери регулярно б'ють світові рекорди та завойовують золото на міжнародних турнірах.</p>
+            <ul class="ukraine-list">
+                <li>
+                    <div class="athlete-name">Лариса Соловйова</div>
+                    <p>Легенда світового спорту. Чотириразова чемпіонка Всесвітніх ігор. Багато разів визнавалася найсильнішою жінкою планети за формулою IPF.</p>
+                </li>
+                <li>
+                    <div class="athlete-name">Олексій Новіков</div>
+                    <p>Хоча зараз Олексій відомий як "Найсильніша людина світу" у стронгмені, свою базову підготовку та перші рекорди він закладав саме у класичному пауерліфтингу.</p>
+                </li>
+            </ul>
+        </section>
+    </main>
 
     <footer>
-        <p>&copy; 2026 Проект з інформатики. Виконав учень 10-го класу.</p>
+        <p>&copy; 2026 Проект з інформатики. Виконав учень 11-го класу - Налапко Дмитро.</p>
     </footer>
 
+    <script>
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelectorAll('.nav-links a');
+
+        menuToggle.addEventListener('click', () => {
+            const isOpen = document.body.classList.toggle('menu-open');
+            menuToggle.setAttribute('aria-expanded', String(isOpen));
+            menuToggle.setAttribute('aria-label', isOpen ? 'Закрити меню' : 'Відкрити меню');
+        });
+
+        navLinks.forEach((link) => {
+            link.addEventListener('click', () => {
+                document.body.classList.remove('menu-open');
+                menuToggle.setAttribute('aria-expanded', 'false');
+                menuToggle.setAttribute('aria-label', 'Відкрити меню');
+            });
+        });
+
+        // Sections gently appear when they enter the viewport.
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.14 });
+
+        document.querySelectorAll('.reveal').forEach((section) => observer.observe(section));
+    </script>
 </body>
 </html>
