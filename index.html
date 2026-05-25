@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Історія пауерліфтингу — Шкільний проект</title>
+    <style>
+        /* Загальні стилі для всього сайту */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth; /* Плавна прокрутка по меню */
+        }
+
+        body {
+            background-color: #1a1a1a; /* Темний фон */
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        /* Навігаційне меню */
+        header {
+            background-color: #111111;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 3px solid #ff4500; /* Помаранчевий акцент */
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #ff4500;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #ff4500;
+        }
+
+        /* Стилі для секцій (блоків сторінки) */
+        section {
+            padding: 100px 20px 60px 20px; /* Відступ зверху через фіксоване меню */
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: 32px;
+            text-transform: uppercase;
+            margin-bottom: 25px;
+            color: #ff4500;
+            border-left: 5px solid #ff4500;
+            padding-left: 15px;
+        }
+
+        p {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #dddddd;
+        }
+
+        /* Головний блок (Вступ) */
+        #home {
+            text-align: center;
+            padding: 180px 20px 100px 20px;
+            background: linear-gradient(rgba(26,26,26,0.8), rgba(26,26,26,1));
+        }
+
+        #home h1 {
+            font-size: 48px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            font-size: 20px;
+            color: #aaaaaa;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Хронологічний список на сторінці історії */
+        .timeline {
+            margin-top: 20px;
+        }
+
+        .timeline-item {
+            margin-bottom: 25px;
+            background-color: #262626;
+            padding: 20px;
+            border-radius: 5px;
+            border-right: 4px solid #333;
+        }
+
+        .timeline-year {
+            font-weight: bold;
+            color: #ff4500;
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        /* Таблиця для вправ */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #222222;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #444444;
+        }
+
+        th {
+            background-color: #ff4500;
+            color: #ffffff;
+            text-transform: uppercase;
+            font-size: 16px;
+        }
+
+        tr:hover {
+            background-color: #2a2a2a;
+        }
+
+        /* Список українських атлетів */
+        .ukraine-list {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .ukraine-list li {
+            background-color: #262626;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #ffd700; /* Жовтий акцент для України */
+        }
+
+        .athlete-name {
+            font-weight: bold;
+            color: #ffffff;
+            font-size: 18px;
+        }
+
+        /* Підвал сайту */
+        footer {
+            background-color: #111111;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            font-size: 14px;
+            color: #666666;
+            border-top: 1px solid #222222;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">PowerHistory</div>
+            <ul>
+                <li><a href="#home">Головна</a></li>
+                <li><a href="#history">Історія</a></li>
+                <li><a href="#exercises">Вправи</a></li>
+                <li><a href="#ukraine">В Україні</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home">
+        <h1>Залізний спорт</h1>
+        <p class="subtitle">Проект про історію, правила та розвиток пауерліфтингу — спорту для тих, хто керує абсолютною силою.</p>
+    </section>
+
+    <section id="about">
+        <h2>Що таке пауерліфтинг?</h2>
+        <p><strong>Пауерліфтинг</strong> (від англійського <em>power</em> — сила, та <em>lift</em> — піднімати) — це силове триборство. Головна мета атлета — підняти сумарно якомога більшу вагу у трьох базових вправах.</p>
+        <p>На відміну від важкої атлетики (де штангу піднімають над головою ривком чи поштовхом), у пауерліфтингу оцінюється чиста сила м'язів у рухах, які є максимально природними для людського тіла.</p>
+    </section>
+
+    <section id="history">
+        <h2>Історія виникнення</h2>
+        <p>Сучасний пауерліфтинг пройшов довгий шлях від простих розваг силачів у цирку до офіційного міжнародного виду спорту.</p>
+        
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-year">1950-ті роки</div>
+                <p>У США та Великій Британії важкоатлети почали використовувати нові вправи для урізноманітнення тренувань. Тоді з'явилися так звані «дивні підйоми» (odd lifts), серед яких найпопулярнішими стали присідання, жим на лаві та тяга.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">1964 рік</div>
+                <p>У США організували перший неофіційний загальнонаціональний чемпіонат. Саме тоді остаточно сформувалося класичне триборство.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">1972 рік</div>
+                <p>Було засновано <strong>IPF (International Powerlifting Federation)</strong> — Міжнародну федерацію пауерліфтингу. Вона розробила єдині правила змагань та почала проводити офіційні чемпіонати світу.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="exercises">
+        <h2>Силове триборство</h2>
+        <p>Змагання проходять суворо за чергою у трьох дисциплінах. На кожну вправу спортсмен має по 3 спроби:</p>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Вправа</th>
+                    <th>Опис виконання та суть руху</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Присідання зі штангою</strong></td>
+                    <td>Штанга лежить на плечах атлета. Він повинен присісти так, щоб верхня частина стегна в тазостегновому суглобі була нижчою за верхню точку коліна, а потім самостійно піднятися.</td>
+                </tr>
+                <tr>
+                    <td><strong>Жим лежачи</strong></td>
+                    <td>Атлет лягає на горизонтальну лаву, знімає штангу зі стійок, опускає її до торкання грудей, робить чітку паузу за командою судді та витискає вгору на повністю прямі руки.</td>
+                </tr>
+                <tr>
+                    <td><strong>Станова тяга</strong></td>
+                    <td>Фінальна вправа. Штанга стоїть на підлозі. Атлет має відірвати її від помосту і повністю випрямитися, зафіксувавши плечі. Кінцевий результат триборства — це сума найкращих спроб у кожній вправі.</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section id="ukraine">
+        <h2>Пауерліфтинг в Україні</h2>
+        <p>Українська збірна є однією з найсильніших команд на світовій арені. Наші ліфтери регулярно б'ють світові рекорди та завойовують золото на міжнародних турнірах.</p>
+        
+        <ul class="ukraine-list">
+            <li>
+                <div class="athlete-name">Лариса Соловйова</div>
+                <p>Легенда світового спорту. Чотириразова чемпіонка Всесвітніх ігор. Багато разів визнавалася найсильнішою жінкою планети за формулою IPF (співвідношення власної ваги до піднятої).</p>
+            </li>
+            <li>
+                <div class="athlete-name">Олексій Новіков</div>
+                <p>Хоча зараз Олексій відомий як "Найсильніша людина світу" (World's Strongest Man 2020) у стронгмені, свою базову підготовку та перші рекорди він закладав саме у класичному пауерліфтингу.</p>
+            </li>
+        </ul>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Проект з інформатики. Виконав учень 10-го класу.</p>
+    </footer>
+
+</body>
+</html>
